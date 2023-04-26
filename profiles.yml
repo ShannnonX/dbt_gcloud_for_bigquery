@@ -1,0 +1,20 @@
+dbt_bigquery_model:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('BQ_PROJECT_ID') }}"
+      dataset: "{{ env_var('BQ_DATASET') }}"
+      location: "{{ env_var('BQ_LOCATION') }}"
+      threads: 4
+    
+    prod:
+      type: bigquery
+      method: oauth
+      project: "house-prediction-381923"
+      dataset: "melbourne_house_data"
+      location: "{{ env_var('BQ_LOCATION') }}"
+      threads: 1
+      timeout_seconds: 300
+      retries: 1
