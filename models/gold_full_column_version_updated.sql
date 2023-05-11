@@ -9,8 +9,7 @@ SELECT *,
   CASE
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('St', 'st', 'Street', 'street', 's', 'S') THEN 'Street'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Rd', 'rd', 'Road', 'road') THEN 'Road'
-    WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Grove', 'grove') THEN 'Grove'
-    WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Gr', 'gr') THEN 'Green'
+    WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Gr', 'gr','Grove', 'grove') THEN 'Grove'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Dr', 'dr', 'Drive', 'drive') THEN 'Drive'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Pde', 'pde', 'Parade', 'parade') THEN 'Parade'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Pl', 'pl', 'Place', 'place') THEN 'Place'
@@ -33,7 +32,7 @@ SELECT *,
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Sq', 'square', 'SQR', 'sqr') THEN 'Square'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Esp', 'esp', 'esplanade', 'e', 'E') THEN 'Esplanade'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Tce', 'tce', 'terrace') THEN 'Terrace'
-    WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Bvd', 'bvd', 'terrace') THEN 'Boulevard'
+    WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Bvd', 'bvd', 'boulevard') THEN 'Boulevard'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('Gra', 'gra', 'grange') THEN 'Grange'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('cr', 'Cr', 'cres') THEN 'Cres'
     WHEN REGEXP_EXTRACT(Address, r'\b(\w+)\s*$') IN ('n', 'N') THEN 'Street North'
