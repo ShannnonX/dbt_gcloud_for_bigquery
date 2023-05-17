@@ -34,8 +34,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   dbt_bigquery_model:
     materialized: table
-
-    data_quality:
-      materialized: view
-
     # Applies to all files under models/example/
