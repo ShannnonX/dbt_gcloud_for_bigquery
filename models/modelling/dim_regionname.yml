@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_regionname
+    columns:
+      - name: RegionnameKey 
+        description: The surrogate key of the Regionname
+        tests:
+          - not_null
+          - unique
+      - name: Regionname 
+        description: The natural key of the Regionname
+        tests:
+          - not_null
+          - unique

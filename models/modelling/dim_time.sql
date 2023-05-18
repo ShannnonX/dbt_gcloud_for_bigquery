@@ -6,7 +6,7 @@
 
 with stg_time as (
     SELECT DISTINCT Date
-    FROM {{ref('silver_full_column_version_updated')}}
+    FROM {{ref('silver_full_column_version_updated_total')}}
     ORDER BY Date ASC
 )
 
@@ -17,4 +17,4 @@ SELECT
   EXTRACT(MONTH FROM  Date) as Month,
   FORMAT_DATE('%Y-%m', Date) as YearMonth,
   EXTRACT(QUARTER FROM Date) as Quarter
-FROM stg_time
+FROM stg_time                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

@@ -42,13 +42,27 @@ SELECT
   Bronze.Regionname,
   SAFE_CAST(Bronze.Propertycount AS INT64) AS Propertycount,
   FORMAT_DATE('%Y-%m', PARSE_DATE('%Y-%m-%d', bronze.Date)) AS YearMonth,
-  Residential.IndexPrice
+  MonthlyIndexPrice.IndexPrice,
+  COALESCE(AbsIndexPrice.melbourne, PreAbsIndexPrice.melbourne) AS IndexPriceAbs
 FROM
   clean_duplicate_row Bronze
 LEFT JOIN
-  `house-prediction-381923.melbourne_house_data.MonthlyResidentialPropertyPrice` AS Residential
+  `house-prediction-381923.melbourne_house_data.MonthlyResidentialPropertyPrice` AS MonthlyIndexPrice
 ON
-  FORMAT_DATE('%Y-%m', PARSE_DATE('%Y-%m-%d', Bronze.Date)) = Residential.YearMonth
+  FORMAT_DATE('%Y-%m', PARSE_DATE('%Y-%m-%d', Bronze.Date)) = MonthlyIndexPrice.YearMonth
+LEFT JOIN
+  `house-prediction-381923.melbourne_house_data.ResidentialPropertyPrice` AS AbsIndexPrice
+ON
+  FORMAT_DATE('%Y-%m', PARSE_DATE('%Y-%m-%d', Bronze.Date)) = AbsIndexPrice.YearMonth
+LEFT JOIN
+  `house-prediction-381923.melbourne_house_data.ResidentialPropertyPrice` AS PreAbsIndexPrice
+ON
+  AbsIndexPrice.YearMonth IS NULL
+  AND FORMAT_DATE('%Y-%m', PARSE_DATE('%Y-%m-%d', Bronze.Date)) > PreAbsIndexPrice.YearMonth
+  AND (
+  PreAbsIndexPrice.YearMonth = FORMAT_DATE('%Y-%m', DATE_SUB(PARSE_DATE('%Y-%m-%d', Bronze.Date), INTERVAL 1 MONTH))
+  OR PreAbsIndexPrice.YearMonth = FORMAT_DATE('%Y-%m', DATE_SUB(PARSE_DATE('%Y-%m-%d', Bronze.Date), INTERVAL 2 MONTH))
+)
 WHERE
   Bronze.Price IS NOT NULL
   AND Bronze.suburb IS NOT NULL
