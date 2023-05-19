@@ -18,11 +18,10 @@ select
     {{ dbt_utils.generate_surrogate_key(['sellerG']) }} as PropertySellerGKey,
     {{ dbt_utils.generate_surrogate_key(['Type']) }} as PropertyTypeKey,
     {{ dbt_utils.generate_surrogate_key(['CouncilArea']) }} as PropertyCouncilAreaKey,
-    stg_property.Suburb,
-    stg_property.Date,
     stg_property.Price,
     stg_property.Rooms,
     stg_property.Bathroom,
-    stg_property.Car
+    stg_property.Car,
+    stg_property.Landsize
 from stg_property
 ORDER by Date ASC
