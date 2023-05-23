@@ -10,14 +10,12 @@ with stg_property as (
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(['stg_property.address', 'suburb']) }} as PropertyKey,
-    {{ dbt_utils.generate_surrogate_key(['Date']) }} as PropertyTimeKey,
-    {{ dbt_utils.generate_surrogate_key(['Suburb']) }} as PropertySuburbKey,
-    {{ dbt_utils.generate_surrogate_key(['Method']) }} as PropertyMethodKey,
-    {{ dbt_utils.generate_surrogate_key(['Regionname']) }} as PropertyRegionnameKey,
-    {{ dbt_utils.generate_surrogate_key(['sellerG']) }} as PropertySellerGKey,
+    {{ dbt_utils.generate_surrogate_key(['stg_property.Address', 'Suburb']) }} as PropertyKey,
+    {{ dbt_utils.generate_surrogate_key(['stg_property.Regionname', 'CouncilArea', 'Suburb', 'Postcode', 'Propertycount']) }} as PropertyLocationKey,
+    {{ dbt_utils.generate_surrogate_key(['Date']) }} as PropertyDateKey,
+    {{ dbt_utils.generate_surrogate_key(['Method']) }} as PropertySellingMethodKey,
+    {{ dbt_utils.generate_surrogate_key(['SellerG']) }} as PropertySellerAgentKey,
     {{ dbt_utils.generate_surrogate_key(['Type']) }} as PropertyTypeKey,
-    {{ dbt_utils.generate_surrogate_key(['CouncilArea']) }} as PropertyCouncilAreaKey,
     stg_property.Price,
     stg_property.Rooms,
     stg_property.Bathroom,

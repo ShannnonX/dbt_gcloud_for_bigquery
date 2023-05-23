@@ -1,9 +1,9 @@
 version: 2
 
 models:
-  - name: dim_time
+  - name: dim_date
     columns:
-      - name: TimeKey 
+      - name: DateKey 
         description: The surrogate key of the time
         tests:
           - not_null
