@@ -20,6 +20,7 @@ select
     stg_property.Rooms,
     stg_property.Bathroom,
     stg_property.Car,
-    stg_property.Landsize
+    stg_property.Landsize, 
+    stg_property.IndexPriceAbs
 from stg_property
 ORDER by Date ASC

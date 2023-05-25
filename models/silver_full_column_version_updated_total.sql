@@ -40,7 +40,7 @@ date_ranges AS (
 )
 
 SELECT
-  * EXCEPT(latest_date, test_start_date, validate_start_date, Regionname),
+  * EXCEPT(latest_date, test_start_date, validate_start_date, Regionname, row_number, previous_date),
   CASE
     WHEN date >= test_start_date THEN 'Test'
     WHEN (date >= validate_start_date and date < test_start_date) THEN 'Validate'
@@ -54,4 +54,4 @@ SELECT
   END AS Regionname
 FROM
   clean_duplicate_row, date_ranges
-WHERE landsize < 2000 and price < 9000000.0
+WHERE landsize < 2000 and price < 5000000.0 and price > 100000
