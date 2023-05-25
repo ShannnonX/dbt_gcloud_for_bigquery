@@ -12,12 +12,31 @@ WITH all_data AS (
     FROM  {{ ref('silver_full_column_version_updated_test')  }}
 ),
 
+clean_duplicate_row as (
+    SELECT
+        *
+        FROM (
+        SELECT
+            *,
+            ROW_NUMBER() OVER (PARTITION BY suburb, address, CAST(price AS STRING)
+            ORDER BY
+            date) AS row_number,
+            LAG(date) OVER (PARTITION BY suburb, address, CAST(price AS STRING)
+            ORDER BY
+            date) AS previous_date
+        FROM
+            all_data ) 
+        WHERE
+        row_number = 1 OR ( row_number > 1 AND  DATE_DIFF(date, previous_date, DAY) > 45) 
+        order by Date ASC
+),
+
 date_ranges AS (
   SELECT 
     MAX(date) AS latest_date,
     DATE_SUB(MAX(date), INTERVAL 30 DAY) AS test_start_date,
     DATE_SUB(MAX(date), INTERVAL 90 DAY) AS validate_start_date
-  FROM all_data
+  FROM clean_duplicate_row
 )
 
 SELECT
@@ -34,5 +53,5 @@ SELECT
       ELSE Regionname
   END AS Regionname
 FROM
-  all_data, date_ranges
+  clean_duplicate_row, date_ranges
 WHERE landsize < 2000 and price < 9000000.0
