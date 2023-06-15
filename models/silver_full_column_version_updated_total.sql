@@ -40,7 +40,7 @@ date_ranges AS (
 )
 
 SELECT
-  * EXCEPT(latest_date, test_start_date, validate_start_date, Regionname, row_number, previous_date),
+  * EXCEPT(latest_date, test_start_date, validate_start_date, Regionname, row_number, previous_date, YearMonth),
   CASE
     WHEN date >= test_start_date THEN 'Test'
     WHEN (date >= validate_start_date and date < test_start_date) THEN 'Validate'
